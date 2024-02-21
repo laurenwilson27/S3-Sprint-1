@@ -3,6 +3,10 @@
 // 'userArgs1' process.argv[2]: First CL argument.
 const fs = require("fs");
 
+const { initBit } = require("./initBit.js");
+const { configBit } = require("./configBit.js");
+const { tokenBit } = require("./tokenBit.js");
+
 const userArgs = process.argv.slice(2);
 
 switch (userArgs[0]) {
@@ -17,15 +21,15 @@ switch (userArgs[0]) {
     break;
   case "init":
   case "i":
-    console.log("Initialize bit");
+    initBit();
     break;
   case "config":
   case "c":
-    console.log("Congifuring bit");
+    configBit();
     break;
   case "token":
   case "t":
-    console.log("Token for bit");
+    tokenBit();
     break;
   default:
     console.log(
