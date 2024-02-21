@@ -14,7 +14,7 @@ const userArgs = process.argv.slice(2);
 const port = 3000;
 
 myEmitter.on("route", (userArgs) => {
-  console.log(`Route: ${userArgs}`);
+  console.log(`User Input: ${userArgs}`);
   const d = new Date();
   if(!fs.existsSync(path.join(__dirname, "logs"))) {
     fs.mkdirSync(path.join(__dirname, "logs"));
@@ -22,7 +22,7 @@ myEmitter.on("route", (userArgs) => {
   if(!fs.existsSync(path.join(__dirname, "logs", String(d.getFullYear())))) {
     fs.mkdirSync(path.join(__dirname, "logs", String(d.getFullYear())));
   }
-  fs.appendFile(path.join(__dirname, "logs", String(d.getFullYear()), "log.txt"), `Route: ${userArgs} at ${d}\n`, (err) => {
+  fs.appendFile(path.join(__dirname, "logs", String(d.getFullYear()), "log.txt"), `User Input: ${userArgs} at ${d}\n`, (err) => {
     if(err) {
       console.error(err);
     }
