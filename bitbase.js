@@ -3,9 +3,9 @@
 // 'userArgs1' process.argv[2]: First CL argument.
 const fs = require("fs");
 
-const { initBit } = require("./initBit.js");
-const { configBit } = require("./configBit.js");
-const { tokenBit } = require("./tokenBit.js");
+const { initBit } = require("./commands/initBit.js");
+const { configBit } = require("./commands/onfigBit.js");
+const { tokenBit } = require("./commands/tokenBit.js");
 
 const userArgs = process.argv.slice(2);
 
