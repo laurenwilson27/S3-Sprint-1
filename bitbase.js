@@ -3,9 +3,13 @@
 // 'userArgs1' process.argv[2]: First CL argument.
 const fs = require("fs");
 
-const { initBit } = require("./commands/initBit.js");
-const { configBit } = require("./commands/onfigBit.js");
+const initBit = require("./commands/initBit.js");
+const { configBit } = require("./commands/configBit.js");
 const { tokenBit } = require("./commands/tokenBit.js");
+
+// Global constants containing the default configuration
+global.DEFAULT_CONFIG = {};
+global.DEFAULT_USERS = [];
 
 const userArgs = process.argv.slice(2);
 
@@ -21,7 +25,7 @@ switch (userArgs[0]) {
     break;
   case "init":
   case "i":
-    initBit();
+    initBit(userArgs);
     break;
   case "config":
   case "c":

@@ -1,12 +1,36 @@
+const { create } = require("domain");
 const fs = require("fs");
-const fsPromises = fs.promises;
 const path = require("path");
 
 const init = (userArgs) => {
   // Different functionality depending on the flags issued
   switch (userArgs[1]) {
-    case "--status":
+    case undefined:
+      console.log(
+        "The 'init' command requires an option to be specified. Try 'init --help'"
+      );
       break;
+
+    case "--status":
+      initStatus();
+      break;
+
+    case "--all":
+      createDirectories();
+      createFiles();
+      console.log("Directories and files initialized.");
+      break;
+
+    case "--mk":
+      createDirectories();
+      console.log("Directories initialized.");
+      break;
+
+    case "--cat":
+      createFiles();
+      console.log("Files initialized.");
+      break;
+
     default:
       console.log(
         `'${userArgs.join()}' is not a valid command. Try 'init --help'`
@@ -17,13 +41,39 @@ const init = (userArgs) => {
 // init --status
 const initStatus = () => {
   let status = "";
+
+  status += fs.existsSync(path.join(__dirname, "..", "logs"))
+    ? "Directories are initialized. "
+    : "Directories are NOT initialized. ";
+
   status +=
-    fs.existsSync(path.join(__dirname, "logs")) &&
-    fs.existsSync(path.join(__dirname, "help"))
-      ? "Directories are initialized. "
-      : "Directories are NOT initialized. ";
+    fs.existsSync(path.join(__dirname, "..", "config.json")) &&
+    fs.existsSync(path.join(__dirname, "..", "users.json"))
+      ? "Files are initialized."
+      : "Files are NOT initialized.";
 
   console.log(status);
+};
+
+// Function which creates required directories
+const createDirectories = () => {
+  if (!fs.existsSync(path.join(__dirname, "..", "logs")))
+    fs.mkdirSync(path.join(__dirname, "..", "logs"));
+};
+
+// Function which creates required files
+const createFiles = () => {
+  if (!fs.existsSync(path.join(__dirname, "..", "config.json")))
+    fs.appendFileSync(
+      path.join(__dirname, "..", "config.json"),
+      JSON.stringify(DEFAULT_CONFIG)
+    );
+
+  if (!fs.existsSync(path.join(__dirname, "..", "users.json")))
+    fs.appendFileSync(
+      path.join(__dirname, "..", "users.json"),
+      JSON.stringify(DEFAULT_USERS)
+    );
 };
 
 module.exports = init;
