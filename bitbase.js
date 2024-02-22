@@ -5,7 +5,7 @@ const fs = require("fs");
 
 const initBit = require("./commands/initBit.js");
 const { configBit } = require("./commands/configBit.js");
-const { tokenBit } = require("./commands/tokenBit.js");
+const tokenBit = require("./commands/tokenBit.js");
 const { fullHelp } = require("./commands/helpText.js");
 
 // Global constants containing the default configuration
@@ -29,11 +29,9 @@ switch (userArgs[0]) {
     break;
   case "token":
   case "t":
-    tokenBit();
+    tokenBit(userArgs);
     break;
   default:
-    console.log(
-      "Unknown command. Please enter bitbase --help or --h for help."
-    );
+    console.log("Unknown command. Please enter bitbase --help or h for help.");
     break;
 }
