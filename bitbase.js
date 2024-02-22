@@ -3,25 +3,25 @@
 // 'userArgs1' process.argv[2]: First CL argument.
 const fs = require("fs");
 
-const { initBit } = require("./initBit.js");
-const { configBit } = require("./configBit.js");
-const { tokenBit } = require("./tokenBit.js");
+const initBit = require("./commands/initBit.js");
+const { configBit } = require("./commands/configBit.js");
+const { tokenBit } = require("./commands/tokenBit.js");
+const { fullHelp } = require("./commands/helpText.js");
+
+// Global constants containing the default configuration
+global.DEFAULT_CONFIG = {};
+global.DEFAULT_USERS = [];
 
 const userArgs = process.argv.slice(2);
 
 switch (userArgs[0]) {
   case "--help":
-  case "--h":
-    try {
-      const helpText = fs.readFileSync("./help.txt", "utf8");
-      console.log(helpText);
-    } catch (error) {
-      console.error("Error reading help file: ", error.message);
-    }
+  case "h":
+    console.log(fullHelp);
     break;
   case "init":
   case "i":
-    initBit();
+    initBit(userArgs);
     break;
   case "config":
   case "c":
