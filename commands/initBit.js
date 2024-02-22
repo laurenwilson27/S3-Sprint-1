@@ -1,6 +1,6 @@
-const { create } = require("domain");
 const fs = require("fs");
 const path = require("path");
+const { initHelp } = require("./helpText");
 
 const init = (userArgs) => {
   // Different functionality depending on the flags issued
@@ -9,6 +9,10 @@ const init = (userArgs) => {
       console.log(
         "The 'init' command requires an option to be specified. Try 'init --help'"
       );
+      break;
+
+    case "--help":
+      console.log(initHelp);
       break;
 
     case "--status":

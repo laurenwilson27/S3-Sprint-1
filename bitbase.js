@@ -6,6 +6,7 @@ const fs = require("fs");
 const initBit = require("./commands/initBit.js");
 const { configBit } = require("./commands/configBit.js");
 const { tokenBit } = require("./commands/tokenBit.js");
+const { fullHelp } = require("./commands/helpText.js");
 
 // Global constants containing the default configuration
 global.DEFAULT_CONFIG = {};
@@ -15,13 +16,8 @@ const userArgs = process.argv.slice(2);
 
 switch (userArgs[0]) {
   case "--help":
-  case "--h":
-    try {
-      const helpText = fs.readFileSync("./help.txt", "utf8");
-      console.log(helpText);
-    } catch (error) {
-      console.error("Error reading help file: ", error.message);
-    }
+  case "h":
+    console.log(fullHelp);
     break;
   case "init":
   case "i":
