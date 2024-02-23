@@ -16,29 +16,47 @@ const port = 3000;
 myEmitter.on("route", (userArgs) => {
   console.log(`User Input: ${userArgs}`);
   const d = new Date();
-  if(!fs.existsSync(path.join(__dirname, "logs"))) {
-    fs.mkdirSync(path.join(__dirname, "logs"));
-  }
-  if(!fs.existsSync(path.join(__dirname, "logs", String(d.getFullYear())))) {
-    fs.mkdirSync(path.join(__dirname, "logs", String(d.getFullYear())));
-  }
-  fs.appendFile(path.join(__dirname, "logs", String(d.getFullYear()), "log.txt"), `User Input: ${userArgs} at ${d}\n`, (err) => {
-    if(err) {
+  const yearFolder = path.join(__dirname, "logs", String(d.getFullYear()));
+  const monthFolder = path.join(yearFolder, String(d.getMonth() + 1));
+  const dayFolder = path.join(monthFolder, String(d.getDate()));
+  try {
+      if (!fs.existsSync(yearFolder)) {
+          fs.mkdirSync(yearFolder, { recursive: true });
+      }
+      if (!fs.existsSync(monthFolder)) {
+          fs.mkdirSync(monthFolder, { recursive: true });
+      }
+      if (!fs.existsSync(dayFolder)) {
+          fs.mkdirSync(dayFolder, { recursive: true });
+      }
+      if (userArgs === "error") {
+          fs.appendFile(path.join(dayFolder, 'error_log.txt'), `Invalid Input: ${userArgs} at ${d}\n`, (err) => {
+          if(err) {
+              console.error(err);
+          }
+      });
+      } else {
+          fs.appendFile(path.join(dayFolder, 'log.txt'), `User Input: ${userArgs} at ${d}\n`, (err) => {
+          if(err) {
+              console.error(err);
+          }
+          });
+      }
+  } catch (err) {
       console.error(err);
-    }
-  });
+  }
 });
 
 switch (userArgs[0]) {
   case "--help":
   case "--h":
-    try {
-      const helpText = fs.readFileSync("./help.txt", "utf8");
-      console.log(helpText);
-    } catch (error) {
-      console.error("Error reading help file: ", error.message);
-    }
-    break;
+      try {
+        const helpText = fs.readFileSync("./help.txt", "utf8");
+        console.log(helpText);
+      } catch (error) {
+        console.error("Error reading help file: ", error.message);
+      }
+      break;
   case "init":
   case "i":
     initBit();
@@ -55,11 +73,14 @@ switch (userArgs[0]) {
     myEmitter.emit("route", "token");
     break;
   default:
-    console.log(
-      "Unknown command. Please enter bitbase --help or --h for help."
-    );
+    try {
+      const helpText = fs.readFileSync("./help.txt", "utf8");
+      console.log(helpText);
+    } catch (error) {
+      console.error("Error reading help file: ", error.message);
+    }
     myEmitter.emit("route", "error");
     break;
 }
 
-module.exports = { userArgs, myEmitter, port };
+module.exports = userArgs;
