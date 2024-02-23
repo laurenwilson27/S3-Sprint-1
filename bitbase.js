@@ -5,7 +5,7 @@ const fs = require("fs");
 
 const initBit = require("./commands/initBit.js");
 const { configBit } = require("./commands/configBit.js");
-const tokenBit = require("./commands/tokenBit.js");
+const { tokenBit } = require("./commands/tokenBit.js");
 const { fullHelp } = require("./commands/helpText.js");
 
 // Global constants containing the default configuration

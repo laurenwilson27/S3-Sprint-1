@@ -5,7 +5,7 @@ const { tokenHelp } = require("./helpText");
 
 const { DateTime } = require("luxon");
 
-const token = (userArgs) => {
+const tokenBit = (userArgs) => {
   const userFile = path.join(__dirname, "..", "users.json");
   // Check that the users.json file exists before we try anything
   if (!fs.existsSync(userFile))
@@ -96,26 +96,57 @@ const token = (userArgs) => {
                 `Cannot update user ${userArgs[3]}, as it does not exist.`
               );
             else {
-              if (userArgs[2] == "e") {
-                // Set the user's email value
-                users[userIndex].email = userArgs[4];
-                // Save the updated user data
-                fs.writeFileSync(userFile, JSON.stringify(users));
+              // User exists, behaviour depends on if 'e' or 'p' was specified
+              switch (userArgs[2]) {
+                case "e":
+                  // Set the user's email value
+                  users[userIndex].email = userArgs[4];
 
-                console.log(`User '${userArgs[3]}' email has been updated.`);
-              } else if (userArgs[2] == "p") {
-                // Set the user's phone number value
-                users[userIndex].phoneNum = userArgs[4];
-                // Save the updated user data
-                fs.writeFileSync(userFile, JSON.stringify(users));
+                  // Save the updated user data
+                  fs.writeFileSync(userFile, JSON.stringify(users));
 
-                console.log(
-                  `User '${userArgs[3]}' phone number has been updated.`
-                );
-              } else
-                console.log(
-                  `'${userArgs.join()}' is not a valid command. Try 'bitbase token --help'`
-                );
+                  console.log(`User '${userArgs[3]}' email has been updated.`);
+                  break;
+
+                case "p":
+                  // Set the user's phone number value
+                  users[userIndex].phoneNum = userArgs[4];
+                  // Save the updated user data
+                  fs.writeFileSync(userFile, JSON.stringify(users));
+
+                  console.log(
+                    `User '${userArgs[3]}' phone number has been updated.`
+                  );
+                  break;
+
+                default:
+                  // Neither was specified
+                  console.log(
+                    `'${userArgs.join()}' is not a valid command. Try 'bitbase token --help'`
+                  );
+              }
+            }
+          }
+          break;
+
+        // Search for user command
+        case "--search":
+          // Ensure additional options are specified
+          if (
+            userArgs[2] == undefined ||
+            userArgs[3] == undefined ||
+            userArgs[4] == undefined
+          )
+            console.log(
+              "Additional options must be specified. Try 'bitbase token --help"
+            );
+          else {
+            let searchResult;
+
+            // Behaviour here depends on the option specified
+            switch (userArgs[3]) {
+              case "u": //Username search
+                break;
             }
           }
           break;
@@ -131,4 +162,6 @@ const token = (userArgs) => {
   }
 };
 
-module.exports = token;
+const getUserByName = () => {};
+
+module.exports = { tokenBit };
