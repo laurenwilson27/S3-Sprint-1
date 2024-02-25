@@ -21,7 +21,15 @@ const tokenBit = (userArgs) => {
       break;
 
     case "--count":
-      console.log(`There are currently ${users.length} users.`);
+      try {
+        const data = fs.readFileSync(USER_FILE);
+        const users = JSON.parse(data);
+
+        console.log(`There are currently ${users.length} users.`);
+      } catch (e) {
+        console.log("Failed to read users.json");
+      }
+
       break;
 
     // New user command
@@ -38,7 +46,7 @@ const tokenBit = (userArgs) => {
         const newUser = addNewUser(userArgs[2]);
         if (newUser.status == "ok")
           console.log(
-            `User '${username}' was successfully created. Token: ` +
+            `User '${userArgs[2]}' was successfully created. Token: ` +
               newUser.token
           );
         else if (newUser.status == "error")
