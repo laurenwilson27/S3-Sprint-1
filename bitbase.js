@@ -29,11 +29,9 @@ switch (userArgs[0]) {
     break;
   case "token":
   case "t":
-    tokenBit();
+    tokenBit(userArgs);
     break;
   default:
-    console.log(
-      "Unknown command. Please enter bitbase --help or --h for help."
-    );
+    console.log("Unknown command. Please enter bitbase --help or h for help.");
     break;
 }

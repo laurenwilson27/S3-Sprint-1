@@ -70,13 +70,15 @@ const createFiles = () => {
   if (!fs.existsSync(path.join(__dirname, "..", "config.json")))
     fs.appendFileSync(
       path.join(__dirname, "..", "config.json"),
-      JSON.stringify(DEFAULT_CONFIG)
+      JSON.stringify(DEFAULT_CONFIG),
+      "utf-8"
     );
 
   if (!fs.existsSync(path.join(__dirname, "..", "users.json")))
     fs.appendFileSync(
       path.join(__dirname, "..", "users.json"),
-      JSON.stringify(DEFAULT_USERS)
+      JSON.stringify(DEFAULT_USERS),
+      "utf-8"
     );
 };
 
