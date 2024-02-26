@@ -3,7 +3,7 @@
 // 'userArgs1' process.argv[2]: First CL argument.
 
 const initBit = require("./commands/initBit.js");
-const { configBit } = require("./commands/configBit.js");
+const configBit = require("./commands/configBit.js");
 const { tokenBit } = require("./commands/tokenBit.js");
 const { fullHelp } = require("./commands/helpText.js");
 const myEmitter = require("./events.js");
@@ -27,7 +27,7 @@ switch (userArgs[0]) {
     break;
   case "config":
   case "c":
-    configBit();
+    configBit(userArgs);
     myEmitter.emit("route", "config");
     break;
   case "token":
