@@ -65,7 +65,7 @@ const configStatus = () => {
 configShow = () => {
   let configuration = {};
   try {
-    const configFile = fs.readFileSync("config.json", "utf8");
+    const configFile = fs.readFileSync("./json/config.json", "utf8");
     configuration = JSON.parse(configFile);
     console.log("Current configuration settings:\n", configuration);
   } catch (err) {
