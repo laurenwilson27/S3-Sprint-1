@@ -9,7 +9,14 @@ const { fullHelp } = require("./commands/helpText.js");
 const myEmitter = require("./events.js");
 
 // Global constants containing the default configuration
-global.DEFAULT_CONFIG = {};
+global.DEFAULT_CONFIG = {
+  name: "BitBase",
+  version: "1.0.0",
+  description: "Command Line Interface for BitBase",
+  main: "bitbase.js",
+  superuser: "systemadmin",
+  database: "example",
+};
 global.DEFAULT_USERS = [];
 
 const userArgs = process.argv.slice(2);

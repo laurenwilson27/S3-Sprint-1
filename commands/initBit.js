@@ -2,15 +2,6 @@ const fs = require("fs");
 const path = require("path");
 const { initHelp } = require("./helpText");
 
-const DEFAULT_CONFIG = {
-  name: "BitBase",
-  version: "1.0.0",
-  description: "Command Line Interface for BitBase",
-  main: "bitbase.js",
-  superuser: "systemadmin",
-  database: "example",
-};
-
 const init = (userArgs) => {
   // Different functionality depending on the flags issued
   switch (userArgs[1]) {
@@ -60,8 +51,8 @@ const initStatus = () => {
     : "Directories are NOT initialized. ";
 
   status +=
-    fs.existsSync(path.join(__dirname, "..", "./json/config.json")) &&
-    fs.existsSync(path.join(__dirname, "..", "./json/users.json"))
+    fs.existsSync(path.join(__dirname, "..", "config.json")) &&
+    fs.existsSync(path.join(__dirname, "..", "users.json"))
       ? "Files are initialized."
       : "Files are NOT initialized.";
 
@@ -76,16 +67,16 @@ const createDirectories = () => {
 
 // Function which creates required files
 const createFiles = () => {
-  if (!fs.existsSync(path.join(__dirname, "..", "./json/config.json")))
+  if (!fs.existsSync(path.join(__dirname, "..", "config.json")))
     fs.appendFileSync(
-      path.join(__dirname, "..", "./json/config.json"),
+      path.join(__dirname, "..", "config.json"),
       JSON.stringify(DEFAULT_CONFIG),
       "utf-8"
     );
 
-  if (!fs.existsSync(path.join(__dirname, "..", "./json/users.json")))
+  if (!fs.existsSync(path.join(__dirname, "..", "users.json")))
     fs.appendFileSync(
-      path.join(__dirname, "..", "./json/users.json"),
+      path.join(__dirname, "..", "users.json"),
       JSON.stringify(DEFAULT_USERS),
       "utf-8"
     );
