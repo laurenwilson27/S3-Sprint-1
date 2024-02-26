@@ -60,8 +60,8 @@ const initStatus = () => {
     : "Directories are NOT initialized. ";
 
   status +=
-    fs.existsSync(path.join(__dirname, "..", "config.json")) &&
-    fs.existsSync(path.join(__dirname, "..", "users.json"))
+    fs.existsSync(path.join(__dirname, "..", "./json/config.json")) &&
+    fs.existsSync(path.join(__dirname, "..", "./json/users.json"))
       ? "Files are initialized."
       : "Files are NOT initialized.";
 
