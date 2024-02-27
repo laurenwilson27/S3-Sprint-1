@@ -50,11 +50,6 @@ const config = (userArgs) => {
 const configStatus = () => {
   let status = "";
 
-  // directories maybe not necessary for config specifically?
-  // status += fs.existsSync(path.join(__dirname, "..", "logs"))
-  //   ? "Directories are initialized. "
-  //   : "Directories are NOT initialized. ";
-
   status += fs.existsSync(path.join(__dirname, "..", "config.json"))
     ? "Config file is initialized."
     : "Config file is NOT initialized.";
