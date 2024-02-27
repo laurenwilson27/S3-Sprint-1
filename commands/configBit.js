@@ -25,6 +25,7 @@ const config = (userArgs) => {
       break;
 
     case "--reset":
+      // Reset config goes here.
       break;
 
     case "--set":
@@ -34,6 +35,7 @@ const config = (userArgs) => {
           "An additional option must be specified. Use 'bitbase token --set <option> <value>'."
         );
       else {
+        // Updating config goes here.
       }
       break;
 
@@ -48,15 +50,14 @@ const config = (userArgs) => {
 const configStatus = () => {
   let status = "";
 
-  status += fs.existsSync(path.join(__dirname, "..", "logs"))
-    ? "Directories are initialized. "
-    : "Directories are NOT initialized. ";
+  // directories maybe not necessary for config specifically?
+  // status += fs.existsSync(path.join(__dirname, "..", "logs"))
+  //   ? "Directories are initialized. "
+  //   : "Directories are NOT initialized. ";
 
-  status +=
-    fs.existsSync(path.join(__dirname, "..", "config.json")) &&
-    fs.existsSync(path.join(__dirname, "..", "users.json"))
-      ? "Files are initialized."
-      : "Files are NOT initialized.";
+  status += fs.existsSync(path.join(__dirname, "..", "config.json"))
+    ? "Config file is initialized."
+    : "Config file is NOT initialized.";
 
   console.log(status);
 };
@@ -65,7 +66,7 @@ const configStatus = () => {
 configShow = () => {
   let configuration = {};
   try {
-    const configFile = fs.readFileSync("./json/config.json", "utf8");
+    const configFile = fs.readFileSync("config.json", "utf8");
     configuration = JSON.parse(configFile);
     console.log("Current configuration settings:\n", configuration);
   } catch (err) {
