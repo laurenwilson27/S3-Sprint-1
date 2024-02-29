@@ -15,7 +15,9 @@
       <% if (!username) { %>
       <div class="error">No user was specified.</div>
       <% } else if (!token) { %>
-      <div class="error">The user <%= username %> does not exist.</div>
+      <div class="error">
+        The user token for <%= username %> does not exist, or it has expired.
+      </div>
       <% } else { %>
       <p>
         The token for user <%= token.username %> is

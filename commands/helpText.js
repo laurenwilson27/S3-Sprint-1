@@ -19,7 +19,7 @@ const tokenHelp =
   bitbase token --upd e <username> <email>\tupdates the json entry with a new email\n\
   bitbase token --search u <username>\t\tfetches a token for a given username\n\
   bitbase token --search p <username>\t\tfetches a token for a given phone number\n\
-  bitbase token --search e <username>\t\tfetches a token for a given username";
+  bitbase token --search e <username>\t\tfetches a token for a given email address";
 
 const fullHelp = [
   "bitbase <command> <option>\n\nUsage:\n\n  bitbase --help\t\t\t\tdisplays all help",

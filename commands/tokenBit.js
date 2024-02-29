@@ -146,8 +146,19 @@ const getUserByName = (username) => {
     const data = fs.readFileSync(USER_FILE);
     const users = JSON.parse(data);
 
-    // return will be undefined if no user is found
-    return users.find((user) => user.username == username);
+    // Function returns undefined if no user is found
+    let find = users.findIndex((user) => user.username == username);
+    if (find == -1) return undefined;
+    else if (DateTime.fromISO(users[find].expiry) < DateTime.now()) {
+      // User exists, but it has expired
+      // Remove user from the users list,
+      users.splice(find, 1);
+
+      // Save the updated user data
+      fs.writeFileSync(USER_FILE, JSON.stringify(users));
+
+      return undefined;
+    } else return users[find];
   } catch (e) {
     console.log("Failed to read users.json");
     return undefined;
@@ -160,8 +171,19 @@ const getUserByEmail = (email) => {
     const data = fs.readFileSync(USER_FILE);
     const users = JSON.parse(data);
 
-    // return will be undefined if no user is found
-    return users.find((user) => user.email == email);
+    // Function returns undefined if no user is found
+    let find = users.findIndex((user) => user.email == email);
+    if (find == -1) return undefined;
+    else if (DateTime.fromISO(users[find].expiry) < DateTime.now()) {
+      // User exists, but it has expired
+      // Remove user from the users list,
+      users.splice(find, 1);
+
+      // Save the updated user data
+      fs.writeFileSync(USER_FILE, JSON.stringify(users));
+
+      return undefined;
+    } else return users[find];
   } catch (e) {
     console.log("Failed to read users.json");
     return undefined;
@@ -174,8 +196,19 @@ const getUserByPhone = (phone) => {
     const data = fs.readFileSync(USER_FILE);
     const users = JSON.parse(data);
 
-    // return will be undefined if no user is found
-    return users.find((user) => user.phone == phone);
+    // Function returns undefined if no user is found
+    let find = users.findIndex((user) => user.phone == phone);
+    if (find == -1) return undefined;
+    else if (DateTime.fromISO(users[find].expiry) < DateTime.now()) {
+      // User exists, but it has expired
+      // Remove user from the users list,
+      users.splice(find, 1);
+
+      // Save the updated user data
+      fs.writeFileSync(USER_FILE, JSON.stringify(users));
+
+      return undefined;
+    } else return users[find];
   } catch (e) {
     console.log("Failed to read users.json");
     return undefined;
@@ -231,16 +264,24 @@ const addNewUser = (username) => {
     const data = fs.readFileSync(USER_FILE);
     const users = JSON.parse(data);
 
-    // Create a token object to hold values as needed
-    const newToken = {};
-
     // Check if the user already exists
-    if (users.findIndex((user) => user.username == username) > -1) {
-      return {
-        status: "error",
-        message: `Could not create user '${username}' because they already exist.`,
-      };
-    } else {
+    let existing = users.findIndex((user) => user.username == username);
+    if (existing > -1) {
+      let oldToken = users[existing];
+
+      if (DateTime.fromISO(oldToken.expiry) >= DateTime.now())
+        return {
+          status: "error",
+          message: `Could not create user token for '${username}' because one already exists.`,
+        };
+      else {
+        // Token has expired, it can be removed, and program flow can continue as if there was no user found
+        users.splice(existing, 1);
+        existing = -1;
+      }
+    }
+
+    if (existing == -1) {
       // Generate a new token hash
       const hash = crypto
         .createHash("md5") // Create a Hash oject
@@ -252,8 +293,7 @@ const addNewUser = (username) => {
         username: username,
         token: hash,
         created: DateTime.now().toISO(),
-        // expiry: DateTime.now().plus({ days: 3 }).toISO(),
-        // An expiry time doesn't quite seem to make sense for a user, but the commented line above would include one
+        expiry: DateTime.now().plus(EXPIRY_TIME).toISO(),
       };
 
       // Add this object to the users list...
@@ -269,7 +309,7 @@ const addNewUser = (username) => {
   } catch (e) {
     return {
       status: "error",
-      message: "There was an error when handling users.json",
+      message: "There was an error when handling users.json: " + e,
     };
   }
 };

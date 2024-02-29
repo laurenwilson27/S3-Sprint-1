@@ -23,7 +23,7 @@ if (!initStatus().match(/Files are initialized\./)) {
   // Handle style.css
   server.get("/resources/style.css", (req, res) => {
     res
-      .header({ "content-type": "text/css" })
+      .header({ "Content-Type": "text/css" })
       .sendFile(path.join(__dirname, "views", "resources", "style.css"));
   });
 
