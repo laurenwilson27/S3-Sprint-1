@@ -13,9 +13,7 @@
     <hr width="100%" />
     <div class="mainPage">
       <% if (token.status == "ok") { %>
-      <div class="success">
-        Token was successfully created! <% token.status %>
-      </div>
+      <div class="success">Token was successfully created!</div>
       <p>
         The token for new user <%= token.username %> is
         <span class="token"><%= token.token %></span>
