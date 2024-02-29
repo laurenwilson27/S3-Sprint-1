@@ -18,6 +18,7 @@ global.DEFAULT_CONFIG = {
   database: "example",
 };
 global.DEFAULT_USERS = [];
+global.EXPIRY_TIME = { days: 3 };
 
 const userArgs = process.argv.slice(2);
 const port = 3000;
