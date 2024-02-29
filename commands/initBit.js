@@ -1,6 +1,6 @@
 const fs = require("fs");
 const path = require("path");
-const { initHelp } = require("./helpText");
+const { initHelp, fullHelp } = require("./helpText");
 
 const initBit = (userArgs) => {
   // Different functionality depending on the flags issued
@@ -52,7 +52,8 @@ const initStatus = () => {
 
   status +=
     fs.existsSync(path.join(__dirname, "..", "config.json")) &&
-    fs.existsSync(path.join(__dirname, "..", "users.json"))
+    fs.existsSync(path.join(__dirname, "..", "users.json")) &&
+    fs.existsSync(path.join(__dirname, "..", "help.txt"))
       ? "Files are initialized."
       : "Files are NOT initialized.";
 
@@ -79,6 +80,13 @@ const createFiles = () => {
     fs.appendFileSync(
       path.join(__dirname, "..", "users.json"),
       JSON.stringify(DEFAULT_USERS),
+      "utf-8"
+    );
+
+  if (!fs.existsSync(path.join(__dirname, "..", "help.txt")))
+    fs.appendFileSync(
+      path.join(__dirname, "..", "help.txt"),
+      fullHelp,
       "utf-8"
     );
 };
