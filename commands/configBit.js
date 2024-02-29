@@ -16,7 +16,6 @@ const config = (userArgs) => {
       break;
 
     case "--status":
-      // Note** Should this be the same as initStatus?
       configStatus();
       break;
 
@@ -25,7 +24,7 @@ const config = (userArgs) => {
       break;
 
     case "--reset":
-      // Reset config goes here.
+      configReset();
       break;
 
     case "--set":
@@ -67,6 +66,14 @@ configShow = () => {
   } catch (err) {
     console.error("Error loading configuration: ", err);
   }
+};
+
+const configReset = () => {
+  fs.writeFileSync(
+    path.join(__dirname, "..", "config.json"),
+    JSON.stringify(DEFAULT_CONFIG),
+    "utf-8"
+  );
 };
 
 module.exports = config;
