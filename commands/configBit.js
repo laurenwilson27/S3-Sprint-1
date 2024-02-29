@@ -34,7 +34,7 @@ const config = (userArgs) => {
           "An additional option must be specified. Use 'bitbase token --set <option> <value>'."
         );
       else {
-        // Updating config goes here.
+        configUpdate(userArgs);
       }
       break;
 
@@ -68,7 +68,35 @@ configShow = () => {
   }
 };
 
+// config --set <option> <value>
+const configUpdate = (userArgs) => {
+  const option = userArgs[2];
+  const value = userArgs[3];
+
+  // Reading existing JSON data from config.json.
+  let configData = {};
+  try {
+    configData = JSON.parse(
+      fs.readFileSync(path.join(__dirname, "..", "config.json"))
+    );
+  } catch (error) {
+    console.error("Error reading config file: ", error);
+  }
+
+  // Updating the option specified with the new value, or adding a new option and value.
+  configData[option] = value;
+
+  // Writing updated data back to config.json.
+  fs.writeFileSync(
+    path.join(__dirname, "..", "config.json"),
+    JSON.stringify(configData),
+    "utf-8"
+  );
+};
+
+// config --reset
 const configReset = () => {
+  // Rewriting config.json back to DEFAULT_CONFIG values.
   fs.writeFileSync(
     path.join(__dirname, "..", "config.json"),
     JSON.stringify(DEFAULT_CONFIG),
