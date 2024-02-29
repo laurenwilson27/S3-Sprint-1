@@ -275,4 +275,4 @@ const addNewUser = (username) => {
 };
 
 // Note that addNewUser is exported, so that the web portal can use it later
-module.exports = { tokenBit, addNewUser };
+module.exports = { tokenBit, addNewUser, getUserByName };
