@@ -2,7 +2,7 @@ const fs = require("fs");
 const path = require("path");
 const { initHelp } = require("./helpText");
 
-const init = (userArgs) => {
+const initBit = (userArgs) => {
   // Different functionality depending on the flags issued
   switch (userArgs[1]) {
     case undefined:
@@ -57,6 +57,7 @@ const initStatus = () => {
       : "Files are NOT initialized.";
 
   console.log(status);
+  return status;
 };
 
 // Function which creates required directories
@@ -82,4 +83,4 @@ const createFiles = () => {
     );
 };
 
-module.exports = init;
+module.exports = { initBit, initStatus };

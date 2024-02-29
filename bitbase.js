@@ -2,7 +2,7 @@
 // '/to/bitbase.js' process.argv[1]
 // 'userArgs1' process.argv[2]: First CL argument.
 
-const initBit = require("./commands/initBit.js");
+const { initBit } = require("./commands/initBit.js");
 const configBit = require("./commands/configBit.js");
 const { tokenBit } = require("./commands/tokenBit.js");
 const { fullHelp } = require("./commands/helpText.js");
