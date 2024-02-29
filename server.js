@@ -47,7 +47,12 @@ if (!initStatus().match(/Files are initialized\./)) {
     res.render("fetch.ejs", { token: user, username: username });
   });
 
-  // Handle GETs to /fetch
+  // Any other request is unknown; the broadest case is a 404
+  server.use((req, res) => {
+    res.status(404).sendFile(path.join(__dirname, "views", "404.html"));
+  });
+
+  // Listen for HTTP traffic
   server.listen(PORT, () =>
     console.log(
       "Server has started, and is accessible at http://localhost:" + PORT
