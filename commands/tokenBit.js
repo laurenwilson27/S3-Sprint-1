@@ -2,7 +2,9 @@ const fs = require("fs");
 const crypto = require("crypto"); // Built-in crypto package
 const path = require("path");
 const { tokenHelp } = require("./helpText");
+
 const { DateTime } = require("luxon");
+
 const USER_FILE = path.join(__dirname, "..", "users.json");
 
 const tokenBit = (userArgs) => {
@@ -22,14 +24,19 @@ const tokenBit = (userArgs) => {
       try {
         const data = fs.readFileSync(USER_FILE);
         const users = JSON.parse(data);
+
         console.log(`There are currently ${users.length} users.`);
       } catch (e) {
         console.log("Failed to read users.json");
       }
+
       break;
 
     // New user command
     case "--new":
+      // TODO: Move user creation to an independant function
+      // ==>
+
       // Ensure additional options are specified
       if (userArgs[2] == undefined)
         console.log(
@@ -45,6 +52,8 @@ const tokenBit = (userArgs) => {
         else if (newUser.status == "error")
           console.error("Error creating new user: " + newUser.message);
       }
+
+      // <==
       break;
 
     // Update user command
@@ -77,7 +86,6 @@ const tokenBit = (userArgs) => {
               )}' is not a valid command. Try 'bitbase token --help'`
             );
         }
-        
       }
       break;
 
@@ -195,8 +203,10 @@ const getUserByPhone = (phone) => {
       // User exists, but it has expired
       // Remove user from the users list,
       users.splice(find, 1);
+
       // Save the updated user data
       fs.writeFileSync(USER_FILE, JSON.stringify(users));
+
       return undefined;
     } else return users[find];
   } catch (e) {
@@ -278,6 +288,9 @@ const addNewUser = (username) => {
         .update(username) // Set the data being hashed by the object to the username
         .digest("hex"); // Return the digest in hexadecimal text format
 
+      // Set the expiry time for the token
+      const EXPIRY_TIME = { days: 3 };
+      
       // Create the user object
       const newToken = {
         username: username,
