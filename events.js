@@ -6,7 +6,7 @@ class MyEmitter extends EventEmitter {}
 const myEmitter = new MyEmitter();
 
 myEmitter.on("route", (userArgs) => {
-  console.log(`User Input: ${userArgs}`);
+  // console.log(`User Input: ${userArgs}`);
   const d = new Date();
   const yearFolder = path.join(__dirname, "logs", String(d.getFullYear()));
   const monthFolder = path.join(yearFolder, String(d.getMonth() + 1));

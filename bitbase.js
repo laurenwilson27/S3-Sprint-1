@@ -1,7 +1,4 @@
-// 'node' process.argv[0]
-// '/to/bitbase.js' process.argv[1]
-// 'userArgs1' process.argv[2]: First CL argument.
-
+const fs = require("fs");
 const { initBit } = require("./commands/initBit.js");
 const configBit = require("./commands/configBit.js");
 const { tokenBit } = require("./commands/tokenBit.js");
@@ -24,6 +21,10 @@ const userArgs = process.argv.slice(2);
 const port = 3000;
 
 switch (userArgs[0]) {
+  case "":
+  case undefined:
+    readMe()
+    break;
   case "--help":
   case "h":
     console.log(fullHelp);
@@ -47,6 +48,16 @@ switch (userArgs[0]) {
     console.log("Unknown command. Please enter bitbase --help or h for help.");
     myEmitter.emit("route", "error");
     break;
+}
+
+function readMe() {
+  fs.readFile("README.md", "utf8", (err, data) => {
+    if (err) {
+      console.error("Error reading README.md: ", err);
+      return;
+    }
+    console.log(data);
+  });
 }
 
 module.exports = userArgs;

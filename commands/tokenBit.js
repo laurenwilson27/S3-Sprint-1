@@ -288,6 +288,9 @@ const addNewUser = (username) => {
         .update(username) // Set the data being hashed by the object to the username
         .digest("hex"); // Return the digest in hexadecimal text format
 
+      // Set the expiry time for the token
+      const EXPIRY_TIME = { days: 3 };
+      
       // Create the user object
       const newToken = {
         username: username,
