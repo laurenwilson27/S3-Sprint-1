@@ -92,6 +92,7 @@ const configUpdate = (userArgs) => {
     JSON.stringify(configData),
     "utf-8"
   );
+  console.log(`Configuration updated: ${option} set to ${value}`);
 };
 
 // config --reset
@@ -102,6 +103,7 @@ const configReset = () => {
     JSON.stringify(DEFAULT_CONFIG),
     "utf-8"
   );
+  console.log("Configuration reset to default settings.");
 };
 
 module.exports = config;
